@@ -3,7 +3,6 @@ exports.up = function(knex, Promise) {
     // table.uuid('id').primary();
     table.increments().primary();
     // table.integer('dog_id').references('dogs.id').onDelete('CASCADE').index();
-    table.string('user_type').notNullable();
     table.string('email').notNullable();
     table.string('password').notNullable();
     table.string('first_name').notNullable();
