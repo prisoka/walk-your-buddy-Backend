@@ -1,13 +1,12 @@
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable('users', (table) => {
+  return knex.schema.createTable('walkers', (table) => {
     // table.uuid('id').primary();
     table.increments().primary();
-    // table.integer('dog_id').references('dogs.id').onDelete('CASCADE').index();
     table.string('email').notNullable();
     table.string('password').notNullable();
     table.string('first_name').notNullable();
     table.string('last_name').notNullable();
-    table.integer('phone_number').notNullable();
+    table.bigInteger('phone_number').notNullable();
     table.text('address_one').notNullable();
     table.text('address_two');
     table.integer('zip').notNullable();
@@ -16,12 +15,10 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('users')
+  return knex.schema.dropTable('walkers')
 }
 
 // id PK
-// dog_id FK
-// user_type - string (NN)
 // email - string (NN)
 // password - text (NN)
 // first_name - text (NN)
@@ -30,9 +27,4 @@ exports.down = function(knex, Promise) {
 // address_one - text (NN)
 // address_two - text
 // zip - number (NN)
-
-// pet_name
-// pet_size
-//
-
 // date - date time
