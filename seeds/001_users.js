@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
   return knex('users').del()
-    .then(function () {
+    .then( () => {
       // Inserts seed entries
       return knex('users').insert([
         {
@@ -12,11 +12,23 @@ exports.seed = function(knex, Promise) {
           password: bcrypt.hashSync('priscilla'),
           first_name: 'priscilla',
           last_name: 'priscilla',
-          phone_number: '5105105511',
+          phone_number: 5105105511,
           address_one: '44 tehama street',
           address_two: '',
           zip: 94105
-        }
+        },
+        {
+          id: 2,
+          email: 'pris2@gmail.com',
+          password: bcrypt.hashSync('priscilla2'),
+          first_name: 'priscilla2',
+          last_name: 'priscilla2',
+          phone_number: 5105105511,
+          address_one: '44 tehama street',
+          address_two: '',
+          zip: 94105
+        },
+
       ]);
     });
 };
