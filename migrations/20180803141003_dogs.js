@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
     table.integer('user_id').references('users.id').onDelete('CASCADE').index();
     table.text('dog_name').notNullable();
     table.integer('dog_age').notNullable();
-    table.integer('dog_size').notNullable();
+    table.text('dog_size').notNullable();
     table.timestamps(true, true);
   })
 };
