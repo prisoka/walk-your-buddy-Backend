@@ -8,6 +8,7 @@ exports.seed = function(knex, Promise) {
       return knex('users').insert([
         {
           id: 1,
+          user_type: 'user',
           email: 'pris@gmail.com',
           password: bcrypt.hashSync('priscilla'),
           first_name: 'priscilla',
@@ -19,8 +20,9 @@ exports.seed = function(knex, Promise) {
         },
         {
           id: 2,
+          user_type: 'walker',
           email: 'pris2@gmail.com',
-          password: bcrypt.hashSync('priscilla2'),
+          password: bcrypt.hashSync('priscilla'),
           first_name: 'priscilla2',
           last_name: 'priscilla2',
           phone_number: 5105105511,

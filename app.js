@@ -6,7 +6,6 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var createUserRouter = require('./routes/createUser');
 var dogsRouter = require('./routes/dogs');
 
 var app = express();
@@ -28,7 +27,6 @@ app.use((req, res, next) => {
 });
 
 app.use('/', indexRouter);
-app.use('/createuser', createUserRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/dogs', dogsRouter);
 

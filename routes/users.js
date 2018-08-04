@@ -46,6 +46,7 @@ router.get('/:userid', (req, res, next) => {
 
 // CREATE one user
 router.post('/', (req, res, next) => {
+  let user_type = req.body.user_type;
   let email = req.body.email;
   let password = req.body.password;
   let first_name = req.body.first_name;
@@ -67,6 +68,7 @@ router.post('/', (req, res, next) => {
 
     knex('users')
     .insert({
+      user_type: user_type,
       email: email,
       password: hashed,
       first_name: first_name,

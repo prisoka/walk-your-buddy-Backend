@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
     table.integer('request_id').references('requests.id').onDelete('CASCADE').index();
     table.integer('user_id').references('users.id').onDelete('CASCADE').index();
     table.integer('dog_id').references('dogs.id').onDelete('CASCADE').index();
-    table.integer('walker_id').references('walkers.id').onDelete('CASCADE').index();
+    table.integer('walker_id').references('users.id').onDelete('CASCADE').index();
   })
 };
 
