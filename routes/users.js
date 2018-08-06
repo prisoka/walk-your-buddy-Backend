@@ -29,8 +29,10 @@ router.get('/:userid', (req, res, next) => {
       delete user.updated_at;
       return user;
     })
-    console.log('the specific user', newUserArr)
     res.send(newUserArr)
+  })
+  .catch(err => {
+    res.status(500).send({error: {message: 'Something went wrong!'}})
   })
 })
 
