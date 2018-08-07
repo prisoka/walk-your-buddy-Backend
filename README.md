@@ -7,7 +7,7 @@ WYB is your solution for when, whatever reason, you don't have time to walk you 
 
 ## Installation
 1. npm install
-2. psql create database <placeholder: name>
+2. psql create database wyb_db
 3. knex migrate:latest
 4. knex seed:run
 5. run nodemon
