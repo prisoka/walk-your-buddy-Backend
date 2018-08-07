@@ -85,6 +85,14 @@ router.post('/', (req, res, next) => {
       let insertedRecord = result[0]
       res.send(insertedRecord)
     })
+    .then(function(user){
+      var token = jwt.sign({ user: user.id },
+                            'secret',
+                            { expiresIn: 24 * 60 * 60 });
+      res.send(200, {'token': myToken,
+                     'user_id': user.id
+                    });
+    });
   })
   .catch((err) => {
     next(err)
