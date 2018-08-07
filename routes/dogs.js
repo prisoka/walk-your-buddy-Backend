@@ -41,14 +41,12 @@ router.post('/', (req, res, next) => {
   let dog_age = req.body.dog_age;
   let dog_size = req.body.dog_size;
 
-
   knex('dogs')
   .insert({
     user_id: 1,
     dog_name: dog_name,
     dog_age: dog_age,
     dog_size: dog_size,
-
   })
   .returning('*')
   .then((result) => {
