@@ -58,15 +58,6 @@ router.post('/', (req, res, next) => {
   })
 })
 
-
-// router.post('/', () => {
-//   let user_id: ;
-//   let dog_name: req.body.dog_name;
-//   let dog_age: req.body.dog_age;
-//   let dog_size: req.body.dog_size;
-//
-// })
-
 // UPDATE one dog
 // DELETE one dog
 
