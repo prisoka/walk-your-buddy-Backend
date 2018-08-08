@@ -2,10 +2,10 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable('accepted_reqs', (table) => {
     // table.uuid('id').primary();
     table.increments().primary();
-    table.integer('request_id').references('requests.id').onDelete('CASCADE').index();
-    table.integer('user_id').references('users.id').onDelete('CASCADE').index();
-    table.integer('dog_id').references('dogs.id').onDelete('CASCADE').index();
-    table.integer('walker_id').references('users.id').onDelete('CASCADE').index();
+    table.integer('request_id').references('requests.id').onDelete('CASCADE').index().notNullable();
+    table.integer('user_id').references('users.id').onDelete('CASCADE').index().notNullable();
+    table.integer('dog_id').references('dogs.id').onDelete('CASCADE').index().notNullable();
+    table.integer('walker_id').references('users.id').onDelete('CASCADE').index().notNullable();
   })
 };
 

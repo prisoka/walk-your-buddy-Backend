@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const knex = require('../db/knex');
+const auth = require('../auth/auth');
 
 /* GET all dogs: listing. */
 router.get('/', (req, res, next) => {
@@ -36,20 +37,15 @@ router.get('/:dogid', (req, res, next) => {
 })
 
 // CREATE one dog
-router.post('/', (req, res, next) => {
-// router.post('/', verifyToken, isLoggedIn, (req, res, next) => {
-  // req.headers check that for the Authorization token
-  // read the user id from the JWT
-  // authorization -- can everyone access this route, or just logged in people?
-  //               -- can any logged in person, or is this jst for a particular user
+router.post('/', auth.checkForToken, auth.verifyToken, auth.authorizedUser, (req, res, next) => {
+  let user_id = req.token.user_id;
   let dog_name = req.body.dog_name;
   let dog_age = req.body.dog_age;
   let dog_size = req.body.dog_size;
 
   knex('dogs')
   .insert({
-    user_id: 1,
-    // user_id: req.token.user,
+    user_id: user_id,
     dog_name: dog_name,
     dog_age: dog_age,
     dog_size: dog_size,
@@ -63,8 +59,5 @@ router.post('/', (req, res, next) => {
     next(err)
   })
 })
-
-// UPDATE one dog
-// DELETE one dog
 
 module.exports = router;

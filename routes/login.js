@@ -17,17 +17,21 @@ router.post('/', (req, res, next) => {
     if(user){
       let passwordGood = bcrypt.compareSync(password, user.password)
       if(passwordGood){
-        let payload = { user_id: user.id }
+        let payload = {
+          user_id: user.id,
+          user_type: user.user_type
+        }
+
         let token = jwt.sign(payload, process.env.JWT_KEY, {
           expiresIn: '7days'
         })
+
         res.cookie('token', token, {
           httpOnly: true,
           expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
           secure: router.get('env') === 'production'
         })
-        let userIsWalker = user.user_type === 'walker';
-        res.status(200).send({userIsWalker: userIsWalker});
+        res.status(200).send({user_type: user.user_type});
       }
     } else {
       throw new Error('Incorrect Email or Password')
