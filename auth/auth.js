@@ -18,7 +18,6 @@ function checkForToken(req, res, next) {
 
 async function verifyToken(req, res, next) {
   try {
-
     const verifiedToken = await jwtVerifyAsync(req.token, process.env.JWT_KEY);
     req.token = verifiedToken
     next();

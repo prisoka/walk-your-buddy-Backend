@@ -5,14 +5,12 @@ exports.seed = function(knex, Promise) {
       // Inserts seed entries
       return knex('dogs').insert([
         {
-          id: 1,
           user_id: 1,
           dog_name: 'Aquila',
           dog_age: 1,
           dog_size: 'small',
         },
         {
-          id: 2,
           user_id: 1,
           dog_name: 'Bacon',
           dog_age: 5,
