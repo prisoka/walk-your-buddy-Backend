@@ -1,11 +1,12 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const { jwtVerifyAsync } = require('./jsonwebTokenAsync');
-const { TOKEN_SECRET } = process.env;
+require('dotenv').config();
 const router = express.Router();
 
 function checkForToken(req, res, next) {
-  if (!req.headers.auth || req.headers.auth == "Bearer: not.avalid.token") {
+  console.log('checkForToken')
+  if (!req.headers.auth || req.headers.auth === "Bearer: not.avalid.token") {
     res.sendStatus(403);
   } else {
     next();
@@ -15,7 +16,7 @@ function checkForToken(req, res, next) {
 async function verifyToken(req, res, next) {
   try {
     let token = req.headers.auth.split(" ")[1];
-    const verifiedToken = await jwtVerifyAsync(token, TOKEN_SECRET);
+    const verifiedToken = await jwtVerifyAsync(token, process.env.JWT_KEY);
     req.token = verifiedToken
     next();
   } catch(err) {
@@ -31,8 +32,8 @@ async function loggedIn(req, res, next) {
   }
 }
 
-function authorized(req, res, next) {
-  if (req.token.sub.id == req.params.id) {
+function authorizedUser(req, res, next) {
+  if (req.token.user_type === 'user') {
     next();
   } else {
     res.sendStatus(403);
@@ -43,5 +44,5 @@ module.exports = {
   checkForToken,
   verifyToken,
   loggedIn,
-  authorized
+  authorizedUser
 }
