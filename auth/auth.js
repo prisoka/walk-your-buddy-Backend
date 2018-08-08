@@ -5,18 +5,21 @@ require('dotenv').config();
 const router = express.Router();
 
 function checkForToken(req, res, next) {
-  console.log('checkForToken')
-  if (!req.headers.auth || req.headers.auth === "Bearer: not.avalid.token") {
-    res.sendStatus(403);
-  } else {
+  if (req.headers.authorization && req.headers.authorization !== "Bearer: not.avalid.token") {
+    req.token = req.headers.authorization.split(" ")[1];
     next();
+  } else if (req.cookies.token) {
+    req.token = req.cookies.token
+    next();
+  } else {
+    res.sendStatus(403);
   }
 }
 
 async function verifyToken(req, res, next) {
   try {
-    let token = req.headers.auth.split(" ")[1];
-    const verifiedToken = await jwtVerifyAsync(token, process.env.JWT_KEY);
+
+    const verifiedToken = await jwtVerifyAsync(req.token, process.env.JWT_KEY);
     req.token = verifiedToken
     next();
   } catch(err) {
