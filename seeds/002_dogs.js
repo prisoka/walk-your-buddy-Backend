@@ -13,7 +13,7 @@ exports.seed = function(knex, Promise) {
         },
         {
           id: 2,
-          user_id: 2,
+          user_id: 1,
           dog_name: 'Bacon',
           dog_age: 5,
           dog_size: 'large',

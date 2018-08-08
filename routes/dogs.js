@@ -48,7 +48,7 @@ router.post('/', (req, res, next) => {
 
   knex('dogs')
   .insert({
-    user_id: 1,
+    // user_id: 1,
     // user_id: req.token.user,
     dog_name: dog_name,
     dog_age: dog_age,

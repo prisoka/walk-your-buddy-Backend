@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const knex = require('../db/knex');
 require('dotenv').config();
 
+const auth = require('../auth/auth') 
+
 // login USER
 router.post('/', (req, res, next) => {
   let email = req.body.email;
