@@ -37,6 +37,11 @@ router.get('/:dogid', (req, res, next) => {
 
 // CREATE one dog
 router.post('/', (req, res, next) => {
+// router.post('/', verifyToken, isLoggedIn, (req, res, next) => {
+  // req.headers check that for the Authorization token
+  // read the user id from the JWT
+  // authorization -- can everyone access this route, or just logged in people?
+  //               -- can any logged in person, or is this jst for a particular user
   let dog_name = req.body.dog_name;
   let dog_age = req.body.dog_age;
   let dog_size = req.body.dog_size;
@@ -44,6 +49,7 @@ router.post('/', (req, res, next) => {
   knex('dogs')
   .insert({
     user_id: 1,
+    // user_id: req.token.user,
     dog_name: dog_name,
     dog_age: dog_age,
     dog_size: dog_size,

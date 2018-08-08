@@ -28,15 +28,13 @@ router.post('/', (req, res, next) => {
         })
         let userIsWalker = user.user_type === 'walker';
         res.status(200).send({userIsWalker: userIsWalker});
-      } else {
-        throw new Error('Incorrect Email or Password')
       }
     } else {
       throw new Error('Incorrect Email or Password')
     }
   })
   .catch((err) => {
-    next(err)
+    res.status(404).send({error: {message: err.message}})
   })
 })
 
