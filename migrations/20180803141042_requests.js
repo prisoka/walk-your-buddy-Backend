@@ -19,3 +19,4 @@ exports.down = function(knex, Promise) {
 // dog_id
 // booking_date
 // booking_time
+// walker_id

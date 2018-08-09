@@ -7,6 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var dogsRouter = require('./routes/dogs');
+var requestRouter = require('./routes/request');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
 
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/dogs', dogsRouter);
+app.use('/api/request', requestRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/logout', logoutRouter);
 
