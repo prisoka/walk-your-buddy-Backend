@@ -21,19 +21,13 @@ router.post('/', (req, res, next) => {
           user_id: user.id,
           user_type: user.user_type
         }
-        let token = jwt.sign(payload, process.env.JWT_KEY, {
-          expiresIn: '7days'
-        })
+        let token = jwt.sign(payload, process.env.JWT_KEY)
         res.cookie('token', token, {
           httpOnly: true,
           expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
           secure: router.get('env') === 'production'
         })
-        // trying to send token in Local Storage here: >>>
-        // localStorage.setItem('token', token)
-        res.status(200).send({
-          user_type: user.user_type,
-        });
+        res.status(200).send({user_type: user.user_type});
       }
     } else {
       throw new Error('Incorrect Email or Password')
@@ -43,16 +37,5 @@ router.post('/', (req, res, next) => {
     res.status(404).send({error: {message: err.message}})
   })
 })
-
-router.get('/logout', function(req, res){
-    cookie = req.cookies;
-    for (var prop in cookie) {
-        if (!cookie.hasOwnProperty(prop)) {
-            continue;
-        }
-        res.cookie(prop, '', {expires: new Date(0)});
-    }
-    res.redirect('/');
-});
 
 module.exports = router;
