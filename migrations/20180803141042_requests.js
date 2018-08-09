@@ -4,8 +4,8 @@ exports.up = function(knex, Promise) {
     table.increments().primary();
     table.integer('user_id').references('users.id').onDelete('CASCADE').index().notNullable();
     table.integer('dog_id').references('dogs.id').onDelete('CASCADE').index();
-    table.date('request_date').notNullable();
-    table.time('request_time').notNullable();
+    table.date('request_date');
+    table.time('request_time');
     table.integer('walker_id').references('users.id').onDelete('CASCADE').index();
     table.timestamps(true, true);
   })
