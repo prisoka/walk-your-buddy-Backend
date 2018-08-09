@@ -16,7 +16,6 @@ exports.seed = function(knex, Promise) {
           dog_age: 5,
           dog_size: 'large',
         },
-
       ]);
     });
 };
