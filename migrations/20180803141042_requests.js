@@ -7,6 +7,7 @@ exports.up = function(knex, Promise) {
     table.datetime('request_date').notNullable();
     table.datetime('request_time').notNullable();
     table.integer('walker_id').references('users.id').onDelete('CASCADE').index();
+    table.timestamps(true, true);
   })
 };
 

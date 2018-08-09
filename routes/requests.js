@@ -3,6 +3,22 @@ const router = express.Router();
 const knex = require('../db/knex');
 const auth = require('../auth/auth');
 
+/* GET all requests: listing. */
+router.get('/', (req, res, next) => {
+  knex('requests')
+  .then((requests) => {
+    let newReqsArr = requests.map(request => {
+      delete request.created_at;
+      delete request.updated_at;
+      return request
+    })
+    res.status(200).send(newReqsArr)
+  })
+  .catch(err => {
+    res.status(500).send({error: {message: 'Something went wrong!'}})
+  })
+});
+
 // CREATE on request
 router.post('/', auth.checkForToken, auth.verifyToken, auth.authorizedUser, (req, res, next) => {
   let user_id = req.token.user_id;
