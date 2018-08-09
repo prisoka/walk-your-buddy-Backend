@@ -4,8 +4,8 @@ exports.up = function(knex, Promise) {
     table.increments().primary();
     table.integer('user_id').references('users.id').onDelete('CASCADE').index().notNullable();
     table.integer('dog_id').references('dogs.id').onDelete('CASCADE').index().notNullable();
-    table.datetime('booking_date').notNullable();
-    table.datetime('booking_time').notNullable();
+    table.datetime('request_date').notNullable();
+    table.datetime('request_time').notNullable();
     table.integer('walker_id').references('users.id').onDelete('CASCADE').index().notNullable();
   })
 };
@@ -17,6 +17,6 @@ exports.down = function(knex, Promise) {
 // id
 // user_id
 // dog_id
-// booking_date
-// booking_time
+// request_date
+// request_time
 // walker_id
