@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
     table.integer('dog_id').references('dogs.id').onDelete('CASCADE').index().notNullable();
     table.datetime('booking_date').notNullable();
     table.datetime('booking_time').notNullable();
+    table.integer('walker_id').references('users.id').onDelete('CASCADE').index().notNullable();
   })
 };
 
