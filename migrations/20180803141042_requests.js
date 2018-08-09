@@ -3,10 +3,10 @@ exports.up = function(knex, Promise) {
     // table.uuid('id').primary();
     table.increments().primary();
     table.integer('user_id').references('users.id').onDelete('CASCADE').index().notNullable();
-    table.integer('dog_id').references('dogs.id').onDelete('CASCADE').index().notNullable();
+    table.integer('dog_id').references('dogs.id').onDelete('CASCADE').index();
     table.datetime('request_date').notNullable();
     table.datetime('request_time').notNullable();
-    table.integer('walker_id').references('users.id').onDelete('CASCADE').index().notNullable();
+    table.integer('walker_id').references('users.id').onDelete('CASCADE').index();
   })
 };
 

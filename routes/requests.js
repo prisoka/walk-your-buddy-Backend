@@ -3,7 +3,7 @@ const router = express.Router();
 const knex = require('../db/knex');
 const auth = require('../auth/auth');
 
-// CREATE one dog
+// CREATE on request
 router.post('/', auth.checkForToken, auth.verifyToken, auth.authorizedUser, (req, res, next) => {
   let user_id = req.token.user_id;
   let dog_id = req.body.dog_id;
@@ -11,7 +11,7 @@ router.post('/', auth.checkForToken, auth.verifyToken, auth.authorizedUser, (req
   let request_time = req.body.request_time;
   let walker_id = req.token.user_id;
 
-  knex('dogs')
+  knex('requests')
   .insert({
     user_id: user_id,
     dog_id: dog_id,
