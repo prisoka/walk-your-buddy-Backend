@@ -25,14 +25,14 @@ router.post('/', auth.checkForToken, auth.verifyToken, auth.authorizedUser, (req
   let dog_id = req.body.dog_id;
   let request_date = req.body.request_date;
   let request_time = req.body.request_time;
-  let walker_id = req.token.user_id;
+  let walker_id = req.body.walker_id;
 
   knex('requests')
   .insert({
     user_id: user_id,
     dog_id: dog_id,
     request_date: request_date,
-    request_date: request_date,
+    request_time: request_time,
     walker_id: walker_id
   })
   .returning('*')
