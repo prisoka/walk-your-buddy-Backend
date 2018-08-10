@@ -4,7 +4,6 @@ const knex = require('../db/knex');
 
 // logout USER
 router.get('/', function(req, res){
-  console.log('hello!!!!')
   res.cookie('token', 'DELETED', {
     httpOnly: true,
     expires: new Date(Date.now()),
