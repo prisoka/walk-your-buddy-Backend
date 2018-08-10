@@ -23,11 +23,14 @@ router.post('/', (req, res, next) => {
         }
         let token = jwt.sign(payload, process.env.JWT_KEY)
         res.cookie('token', token, {
-          httpOnly: true,
+          // httpOnly: true,
           expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
           secure: router.get('env') === 'production'
         })
-        res.status(200).send({user_type: user.user_type});
+        res.status(200).send({
+          first_name: user.first_name,
+          user_type: user.user_type
+        });
       }
     } else {
       throw new Error('Incorrect Email or Password')

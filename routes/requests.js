@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
     let newReqsArr = requests.map(request => {
       delete request.created_at;
       delete request.updated_at;
-      return request
+      return knex('dogs').where('id', request)
     })
     res.status(200).send(newReqsArr)
   })

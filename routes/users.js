@@ -26,6 +26,7 @@ router.get('/:userid', (req, res, next) => {
   .where('id', req.params.userid)
   .then((user) => {
     let newUserArr = user.map((user) => {
+      delete user.password;
       delete user.created_at;
       delete user.updated_at;
       return user;
@@ -84,7 +85,7 @@ router.post('/', (req, res, next) => {
     .returning('*')
     .then((result) => {
       let insertedRecord = result[0]
-      res.send(insertedRecord)
+      res.send({})
     })
     // .then(function(user){
     //   var token = jwt.sign({ user: user.id },
