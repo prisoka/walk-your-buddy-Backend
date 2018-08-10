@@ -20,7 +20,7 @@ router.get('/', (req, res, next) => {
   .join('users AS u', 'u.id', 'r.user_id')
   .join('dogs AS d', 'd.id', 'r.dog_id')
   .where('r.walker_id', 'IS', null)
-  
+
   .then((requests) => {
     console.log('requests', requests)
     res.status(200).send(requests)
