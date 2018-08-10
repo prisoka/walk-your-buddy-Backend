@@ -45,6 +45,7 @@ router.post('/', auth.checkForToken, auth.verifyToken, auth.authorizedUser, (req
   let dog_name = req.body.dog_name;
   let dog_age = req.body.dog_age;
   let dog_size = req.body.dog_size;
+  let dog_poto = req.body.dog_photo;
 
   knex('dogs')
   .insert({
@@ -52,6 +53,7 @@ router.post('/', auth.checkForToken, auth.verifyToken, auth.authorizedUser, (req
     dog_name: dog_name,
     dog_age: dog_age,
     dog_size: dog_size,
+    dog_photo: dog_photo
   })
   .returning('*')
   .then((result) => {

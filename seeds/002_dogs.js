@@ -9,12 +9,14 @@ exports.seed = function(knex, Promise) {
           dog_name: 'Aquila',
           dog_age: 1,
           dog_size: 'small',
+          dog_photo: ''
         },
         {
           user_id: 1,
           dog_name: 'Bacon',
           dog_age: 5,
           dog_size: 'large',
+          dog_photo: ''
         }
       ]);
     });
