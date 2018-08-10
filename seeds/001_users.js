@@ -27,8 +27,7 @@ exports.seed = function(knex, Promise) {
           address_one: '44 tehama street',
           address_two: '',
           zip: 94105
-        },
-
+        }
       ]);
     });
 };

@@ -6,13 +6,24 @@ const auth = require('../auth/auth');
 /* GET all requests: listing. */
 router.get('/', (req, res, next) => {
   knex('requests')
+  .select(
+    "u.first_name",
+    "u.address_one",
+    "u.address_two",
+    "u.zip",
+    "d.dog_name",
+    "r.id",
+    "r.request_date",
+    "r.request_time"
+  )
+  .from('requests AS r')
+  .join('users AS u', 'u.id', 'r.user_id')
+  .join('dogs AS d', 'd.id', 'r.dog_id')
+  .where('r.walker_id', 'IS', null)
+  
   .then((requests) => {
-    let newReqsArr = requests.map(request => {
-      delete request.created_at;
-      delete request.updated_at;
-      return knex('dogs').where('id', request)
-    })
-    res.status(200).send(newReqsArr)
+    console.log('requests', requests)
+    res.status(200).send(requests)
   })
   .catch(err => {
     res.status(500).send({error: {message: 'Something went wrong!'}})
@@ -25,7 +36,6 @@ router.post('/', auth.checkForToken, auth.verifyToken, auth.authorizedUser, (req
   let dog_id = req.body.dog_id;
   let request_date = req.body.request_date;
   let request_time = req.body.request_time;
-  let walker_id = req.body.walker_id;
 
   knex('requests')
   .insert({
@@ -33,7 +43,7 @@ router.post('/', auth.checkForToken, auth.verifyToken, auth.authorizedUser, (req
     dog_id: dog_id,
     request_date: request_date,
     request_time: request_time,
-    walker_id: walker_id
+    walker_id: null
   })
   .returning('*')
   .then((result) => {

@@ -15,7 +15,7 @@ exports.seed = function(knex, Promise) {
           dog_name: 'Bacon',
           dog_age: 5,
           dog_size: 'large',
-        },
+        }
       ]);
     });
 };
