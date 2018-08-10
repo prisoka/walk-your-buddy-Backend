@@ -45,7 +45,7 @@ router.post('/', auth.checkForToken, auth.verifyToken, auth.authorizedUser, (req
   let dog_name = req.body.dog_name;
   let dog_age = req.body.dog_age;
   let dog_size = req.body.dog_size;
-  let dog_poto = req.body.dog_photo;
+  let dog_photo = req.body.dog_photo;
 
   knex('dogs')
   .insert({
