@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
     table.text('dog_name').notNullable();
     table.integer('dog_age').notNullable();
     table.text('dog_size').notNullable();
-    table.binary('dog_photo');
+    table.text('dog_photo_url');
     table.timestamps(true, true);
   })
 };

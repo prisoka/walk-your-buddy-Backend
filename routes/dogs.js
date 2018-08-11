@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const knex = require('../db/knex');
 const auth = require('../auth/auth');
+const multer  = require('multer')
+const upload = multer({ dest: 'public/images' })
 
 /* GET all dogs: listing. */
 router.get('/', auth.checkForToken, auth.verifyToken, (req, res, next) => {
@@ -40,12 +42,14 @@ router.get('/:dogid', (req, res, next) => {
 })
 
 // CREATE one dog
-router.post('/', auth.checkForToken, auth.verifyToken, auth.authorizedUser, (req, res, next) => {
+router.post('/', auth.checkForToken, auth.verifyToken, auth.authorizedUser, upload.single('dog_photo'), (req, res, next) => {
   let user_id = req.token.user_id;
   let dog_name = req.body.dog_name;
   let dog_age = req.body.dog_age;
   let dog_size = req.body.dog_size;
-  let dog_photo = req.body.dog_photo;
+  let dog_photo_url = req.file.path;
+
+  dog_photo_url = `http://localhost:3000/${dog_photo_url.replace('public/', '')}`
 
   knex('dogs')
   .insert({
@@ -53,7 +57,7 @@ router.post('/', auth.checkForToken, auth.verifyToken, auth.authorizedUser, (req
     dog_name: dog_name,
     dog_age: dog_age,
     dog_size: dog_size,
-    dog_photo: dog_photo
+    dog_photo_url: dog_photo_url
   })
   .returning('*')
   .then((result) => {

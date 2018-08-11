@@ -12,6 +12,7 @@ router.get('/', (req, res, next) => {
     "u.address_two",
     "u.zip",
     "d.dog_name",
+    "d.dog_photo_url",
     "r.id",
     "r.request_date",
     "r.request_time"
@@ -22,7 +23,6 @@ router.get('/', (req, res, next) => {
   .where('r.walker_id', 'IS', null)
 
   .then((requests) => {
-    console.log('requests', requests)
     res.status(200).send(requests)
   })
   .catch(err => {
