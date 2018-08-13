@@ -8,24 +8,24 @@ exports.seed = function(knex, Promise) {
       return knex('users').insert([
         {
           user_type: 'user',
-          email: 'pri@gmail.com',
+          email: 'user@gmail.com',
           password: bcrypt.hashSync('priscilla'),
           first_name: 'Priscilla',
           last_name: 'User',
           phone_number: 5105105511,
-          address_one: '44 tehama street',
-          address_two: '',
+          address_one: '44 Tehama Street',
+          address_two: '3rd floor',
           zip: 94105
         },
         {
           user_type: 'walker',
-          email: 'ro@gmail.com',
+          email: 'walker@gmail.com',
           password: bcrypt.hashSync('priscilla'),
           first_name: 'Rodrigo',
           last_name: 'Walker',
           phone_number: 5105105511,
-          address_one: '44 tehama street',
-          address_two: '',
+          address_one: '44 Tehama Street',
+          address_two: '5th floor',
           zip: 94105
         }
       ]);
