@@ -42,9 +42,18 @@ function authorizedUser(req, res, next) {
   }
 }
 
+function authorizedWalker(req, res, next) {
+  if (req.token.user_type === 'walker') {
+    next();
+  } else {
+    res.sendStatus(403);
+  }
+}
+
 module.exports = {
   checkForToken,
   verifyToken,
   loggedIn,
-  authorizedUser
+  authorizedUser,
+  authorizedWalker
 }
