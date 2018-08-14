@@ -32,9 +32,9 @@ router.get('/', (req, res, next) => {
 });
 
 // GET one request
-router.get('/:requestid', (req, res, next) => {
+router.get('/:id', (req, res, next) => {
   knex('requests')
-  .where('id', req.params.requestid)
+  .where('id', req.params.id)
   .then((request) => {
     let newReqArr = request.map((request) => {
       return request
@@ -79,7 +79,7 @@ router.post('/', auth.checkForToken, auth.verifyToken, auth.authorizedUser, (req
 // walker_id
 
 // UPDATE one request
-router.put('/:requestid', auth.checkForToken, auth.verifyToken, auth.authorizedWalker, (req, res, next) => {
+router.put('/:id', auth.checkForToken, auth.verifyToken, auth.authorizedWalker, (req, res, next) => {
   let user_id = req.body.user_id;
   let dog_id = req.body.dog_id;
   let request_date = req.body.request_date;
@@ -87,7 +87,7 @@ router.put('/:requestid', auth.checkForToken, auth.verifyToken, auth.authorizedW
   let walker_id = req.token.user_id;
 
   knex('requests')
-  .where('id', req.params.requestid)
+  .where('id', req.params.id)
   .then((data) => {
     if(data.length){
       knex('requests')
@@ -98,7 +98,7 @@ router.put('/:requestid', auth.checkForToken, auth.verifyToken, auth.authorizedW
         request_time: request_time,
         walker_id: walker_id
       })
-      .where('id', req.params.requestid)
+      .where('id', req.params.id)
       .returning('*')
       .then((result) => {
         let updatedRecord = result[0]
