@@ -21,8 +21,6 @@ router.get('/', (req, res, next) => {
   .from('requests AS r')
   .join('users AS u', 'u.id', 'r.user_id')
   .join('dogs AS d', 'd.id', 'r.dog_id')
-  // .where('r.walker_id', 'IS', null)
-
   .then((requests) => {
     res.status(200).send(requests)
   })
@@ -101,8 +99,27 @@ router.put('/:id', auth.checkForToken, auth.verifyToken, auth.authorizedWalker, 
       .where('id', req.params.id)
       .returning('*')
       .then((result) => {
-        let updatedRecord = result[0]
-        res.send(updatedRecord)
+        return knex('requests')
+        .select(
+          "u.first_name",
+          "u.address_one",
+          "u.address_two",
+          "u.zip",
+          "d.dog_name",
+          "d.dog_photo_url",
+          "r.id",
+          "r.request_date",
+          "r.request_time",
+          "r.walker_id"
+        )
+        .from('requests AS r')
+        .join('users AS u', 'u.id', 'r.user_id')
+        .join('dogs AS d', 'd.id', 'r.dog_id')
+        .where('r.id', req.params.id)
+      })
+      .then((result) => {
+        let request = result[0]
+        res.send(request)
       })
     }
   })
