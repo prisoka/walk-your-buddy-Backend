@@ -21,6 +21,8 @@ router.get('/', (req, res, next) => {
   .from('requests AS r')
   .join('users AS u', 'u.id', 'r.user_id')
   .join('dogs AS d', 'd.id', 'r.dog_id')
+  .orderBy('r.request_date')
+  .orderBy('r.request_time')
   .then((requests) => {
     res.status(200).send(requests)
   })
