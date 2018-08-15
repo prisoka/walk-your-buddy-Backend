@@ -3,12 +3,12 @@
 module.exports = {
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/wyb_db',
+    connection: 'postgres://localhost/wyb_db'
   },
 
   test: {
     client: 'pg',
-    connection: 'postgres://localhost/wyb_test',
+    connection: 'postgres://localhost/wyb_test'
   },
 
   production: {

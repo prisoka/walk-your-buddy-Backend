@@ -10,7 +10,7 @@ beforeEach(done => {
     knex('users').insert({
         user_type: 'user',
         email: 'user@gmail.com',
-        password: bcrypt.hashSync('priscilla'),
+        password: '12345678',
         first_name: 'Priscilla',
         last_name: 'User',
         phone_number: 5105105511,
@@ -21,7 +21,7 @@ beforeEach(done => {
     knex('users').insert({
         user_type: 'walker',
         email: 'walker@gmail.com',
-        password: bcrypt.hashSync('priscilla'),
+        password: '12345678',
         first_name: 'Rodrigo',
         last_name: 'Walker',
         phone_number: 5105105511,
@@ -35,3 +35,13 @@ beforeEach(done => {
     console.log(err)
   })
 })
+
+// GET ALL
+describe('GET /api/users', () => {
+  it('responds with JSON', done => {
+    request(app)
+      .get('/api/users')
+      .expect('Content-Type', /json/)
+      .expect(200, done);
+  });
+});
