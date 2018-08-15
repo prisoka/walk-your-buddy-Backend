@@ -102,3 +102,50 @@ describe('POST /api/users', () => {
       });
   });
 });
+
+// update one
+describe('PUT /api/users/:id', () => {
+  let updatedUser = {
+    user_type: 'user',
+    email: 'user_testing@gmail.com',
+    password: '12345678',
+    first_name: 'Priscilla Testing',
+    last_name: 'User',
+    phone_number: 5105105511,
+    address_one: '44 Tehama Street',
+    address_two: '3rd floor',
+    zip: 94105
+  };
+
+  it('responds with JSON', done => {
+    request(app)
+      .put('/api/users/1')
+      .type('form')
+      .send(updatedUser)
+      .expect('Content-Type', /json/)
+      .expect(200, done());
+  });
+
+  it('updates the user in the database', () => {
+    request(app)
+      .put('/api/users/1')
+      .type('form')
+      .send(updatedUser)
+      .end((err, res) => {
+        knex('users')
+          .where('id', 1)
+          .first()
+          .then(user => {
+            expect(user.user_type).to.equal(updatedUser.user_type);
+            expect(user.email).to.equal(updatedUser.email);
+            expect(user.password).to.equal(updatedUser.password);
+            expect(user.first_name).to.equal(updatedUser.first_name);
+            expect(user.last_name).to.equal(updatedUser.last_name);
+            expect(user.phone_number).to.equal(updatedUser.phone_number);
+            expect(user.address_one).to.equal(updatedUser.address_one);
+            expect(user.address_two).to.equal(updatedUser.address_two);
+            expect(user.zip).to.equal(updatedUser.zip);
+          });
+      });
+  });
+});
