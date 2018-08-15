@@ -53,35 +53,52 @@ describe('GET /api/users/:id', () => {
           .expect('Content-Type', /json/)
           .expect(200, done);
   });
-
-  it('the server returns data on the users with the given id', done => {
-  request(app)
-    .get('/api/users/1')
-    .end((err, res) => {
-      expect(res.body).to.equal([{
-        id: 1,
-        user_type: 'user',
-        email: 'user@gmail.com',
-        password: '12345678',
-        first_name: 'Priscilla',
-        last_name: 'User',
-        phone_number: 5105105511,
-        address_one: '44 Tehama Street',
-        address_two: '3rd floor',
-        zip: 94105
-      }]);
-      done();
-    });
-  });
 });
 
-// afterEach((done) => {
-//   knex('users')
-//   .del()
-//   .then(() => {
-//     return done()
-//   })
-//   .catch((err) => {
-//     console.log(err)
-//   })
-// });
+afterEach((done) => {
+  knex('users')
+  .del()
+  .then(() => {
+    return done()
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+});
+
+describe('POST /api/users', () => {
+  let newUser = {
+    user_type: 'user',
+    email: 'user2@gmail.com',
+    password: '12345678',
+    first_name: 'Peter',
+    last_name: 'Pan',
+    phone_number: 3334445656,
+    address_one: '44 Tehama Street',
+    address_two: '3rd floor',
+    zip: 94105
+  }
+
+  it('responds with JSON', done => {
+    request(app)
+      .post('/api/users')
+      .type('form')
+      .send(newUser)
+      .expect('Content-Type', /json/)
+      .expect(200, done);
+  });
+
+  it('adds the new user to the database', done => {
+    request(app)
+      .post('/api/users')
+      .type('form')
+      .send(newUser)
+      .end((err, res) => {
+        knex('users')
+        .select()
+        .then(users => {
+          done();
+        });
+      });
+  });
+});
