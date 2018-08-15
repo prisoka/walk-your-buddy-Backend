@@ -45,3 +45,43 @@ describe('GET /api/users', () => {
       .expect(200, done);
   });
 });
+
+describe('GET /api/users/:id', () => {
+  it('responds with JSON', done => {
+      request(app)
+          .get('/api/users')
+          .expect('Content-Type', /json/)
+          .expect(200, done);
+  });
+
+  it('the server returns data on the users with the given id', done => {
+  request(app)
+    .get('/api/users/1')
+    .end((err, res) => {
+      expect(res.body).to.equal([{
+        id: 1,
+        user_type: 'user',
+        email: 'user@gmail.com',
+        password: '12345678',
+        first_name: 'Priscilla',
+        last_name: 'User',
+        phone_number: 5105105511,
+        address_one: '44 Tehama Street',
+        address_two: '3rd floor',
+        zip: 94105
+      }]);
+      done();
+    });
+  });
+});
+
+// afterEach((done) => {
+//   knex('users')
+//   .del()
+//   .then(() => {
+//     return done()
+//   })
+//   .catch((err) => {
+//     console.log(err)
+//   })
+// });
