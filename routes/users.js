@@ -146,7 +146,6 @@ router.delete('/:id', function(req, res, next) {
           res.send(`ID ${userId} Deleted`)
         })
         .catch((err) => {
-          console.log("Hey, could not delete!")
           next(err)
         })
     })

@@ -5,7 +5,7 @@ const expect = require('chai').expect;
 const app = require('../app');
 const knex = require('../db/knex');
 
-beforeEach(done => {
+beforeEach((done) => {
   Promise.all([
     knex('users').insert({
         user_type: 'user',
@@ -36,25 +36,6 @@ beforeEach(done => {
   })
 })
 
-// GET ALL
-describe('GET /api/users', () => {
-  it('responds with JSON', done => {
-    request(app)
-      .get('/api/users')
-      .expect('Content-Type', /json/)
-      .expect(200, done);
-  });
-});
-
-describe('GET /api/users/:id', () => {
-  it('responds with JSON', done => {
-      request(app)
-          .get('/api/users')
-          .expect('Content-Type', /json/)
-          .expect(200, done);
-  });
-});
-
 afterEach((done) => {
   knex('users')
   .del()
@@ -64,6 +45,77 @@ afterEach((done) => {
   .catch((err) => {
     console.log(err)
   })
+});
+
+// GET ALL
+describe('GET /api/users', () => {
+  it('responds with JSON', done => {
+    request(app)
+      .get('/api/users')
+      .expect('Content-Type', /json/)
+      .expect(200, done());
+  });
+
+  it('returns an array of all users objects when responding with JSON', done => {
+    request(app)
+      .get('/api/users')
+      .end((err, res) => {
+        expect(res.body).to.deep.equal([{
+          id: 3,
+          user_type: 'user',
+          email: 'user@gmail.com',
+          password: '12345678',
+          first_name: 'Priscilla',
+          last_name: 'User',
+          phone_number: '5105105511',
+          address_one: '44 Tehama Street',
+          address_two: '3rd floor',
+          zip: 94105
+        }, {
+          id: 4,
+          user_type: 'walker',
+          email: 'walker@gmail.com',
+          password: '12345678',
+          first_name: 'Rodrigo',
+          last_name: 'Walker',
+          phone_number: '5105105511',
+          address_one: '44 Tehama Street',
+          address_two: '5th floor',
+          zip: 94105
+        }]);
+        done();
+      });
+    });
+});
+
+// GET one
+describe('GET /api/users/:id', () => {
+  it('responds with JSON', done => {
+    request(app)
+      .get('/api/users/1')
+      .expect('Content-Type', /json/)
+      .expect(200, done());
+  });
+
+  it('the server returns data on the users with the given id', done => {
+    request(app)
+      .get('/api/users/1')
+      .end((err, res) => {
+        expect(res.body).to.deep.equal([{
+          id: 1,
+          user_type: 'user',
+          email: 'user@gmail.com',
+          password: '12345678',
+          first_name: 'Priscilla',
+          last_name: 'User',
+          phone_number: 5105105511,
+          address_one: '44 Tehama Street',
+          address_two: '3rd floor',
+          zip: 94105
+        }]);
+        done();
+      });
+    });
 });
 
 describe('POST /api/users', () => {
@@ -79,13 +131,13 @@ describe('POST /api/users', () => {
     zip: 94105
   }
 
-  it('responds with JSON', done => {
+  it('responds with JSON', () => {
     request(app)
       .post('/api/users')
       .type('form')
       .send(newUser)
       .expect('Content-Type', /json/)
-      .expect(200, done);
+      .expect(200);
   });
 
   it('adds the new user to the database', done => {
@@ -104,7 +156,7 @@ describe('POST /api/users', () => {
 });
 
 // update one
-describe('PUT /api/users/:id', () => {
+describe('PUT /api/users/:id', done => {
   let updatedUser = {
     user_type: 'user',
     email: 'user_testing@gmail.com',
@@ -147,5 +199,14 @@ describe('PUT /api/users/:id', () => {
             expect(user.zip).to.equal(updatedUser.zip);
           });
       });
+  });
+});
+
+describe('Delete /api/users/:id', () => {
+  it('should return status 200 after DELETING given id', done => {
+      request(app)
+          .get('/api/users/1')
+          .expect('Content-Type', /json/)
+          .expect(200, done);
   });
 });
