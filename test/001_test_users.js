@@ -4,48 +4,27 @@ const request = require('supertest');
 const expect = require('chai').expect;
 const app = require('../app');
 const knex = require('../db/knex');
+const bcrypt = require('bcryptjs');
 
 beforeEach((done) => {
-  Promise.all([
-    knex('users').insert({
-      user_type: 'user',
-      email: 'user@gmail.com',
-      password: '12345678',
-      first_name: 'Priscilla',
-      last_name: 'User',
-      phone_number: 5105105511,
-      address_one: '44 Tehama Street',
-      address_two: '3rd floor',
-      zip: 94105
-    }),
-    knex('users').insert({
-      user_type: 'walker',
-      email: 'walker@gmail.com',
-      password: '12345678',
-      first_name: 'Rodrigo',
-      last_name: 'Walker',
-      phone_number: 5105105511,
-      address_one: '44 Tehama Street',
-      address_two: '5th floor',
-      zip: 94105
-    })
-  ])
-  .then(() => done())
-  .catch((err)=>{
-    console.log(err)
-  })
-})
+  knex.migrate.rollback()
+  .then(() => {
+    knex.migrate.latest()
+    .then(() => {
+      return knex.seed.run()
+      .then(() => {
+        done();
+      });
+    });
+  });
+});
 
 afterEach((done) => {
-  knex('users')
-  .del()
+  knex.migrate.rollback()
   .then(() => {
-    return done()
-  })
-  .catch((err) => {
-    console.log(err)
-  })
-});
+    done();
+  });
+})
 
 // GET ALL
 describe('GET /api/users', () => {
@@ -61,10 +40,10 @@ describe('GET /api/users', () => {
       .get('/api/users')
       .end((err, res) => {
         expect(res.body).to.deep.equal([{
-          id: 3,
+          id: 1,
           user_type: 'user',
           email: 'user@gmail.com',
-          password: '12345678',
+          password: bcrypt.hashSync('priscilla'),
           first_name: 'Priscilla',
           last_name: 'User',
           phone_number: '5105105511',
@@ -72,10 +51,10 @@ describe('GET /api/users', () => {
           address_two: '3rd floor',
           zip: 94105
         }, {
-          id: 4,
+          id: 2,
           user_type: 'walker',
           email: 'walker@gmail.com',
-          password: '12345678',
+          password: bcrypt.hashSync('priscilla'),
           first_name: 'Rodrigo',
           last_name: 'Walker',
           phone_number: '5105105511',
@@ -160,7 +139,7 @@ describe('PUT /api/users/:id', done => {
   let updatedUser = {
     user_type: 'user',
     email: 'user_testing@gmail.com',
-    password: '12345678',
+    password: bcrypt.hashSync('12345678'),
     first_name: 'Priscilla Testing',
     last_name: 'User',
     phone_number: 5105105511,
