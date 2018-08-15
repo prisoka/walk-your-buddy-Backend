@@ -24,7 +24,12 @@ router.get('/', (req, res, next) => {
   .orderBy('r.request_date')
   .orderBy('r.request_time')
   .then((requests) => {
-    res.status(200).send(requests)
+    let newReqArr = requests.map(request => {
+      delete request.created_at;
+      delete request.updated_at;
+      return request
+    })
+    res.status(200).send(newReqArr)
   })
   .catch(err => {
     res.status(500).send({error: {message: 'Something went wrong!'}})
@@ -37,6 +42,8 @@ router.get('/:id', (req, res, next) => {
   .where('id', req.params.id)
   .then((request) => {
     let newReqArr = request.map((request) => {
+      delete request.created_at;
+      delete request.updated_at;
       return request
     })
     res.send(newReqArr)
