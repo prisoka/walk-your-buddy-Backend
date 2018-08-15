@@ -121,7 +121,7 @@ router.put('/:userid', (req, res, next) => {
       .where('id', req.params.userid)
       .returning('*')
       .then((updateResult) => {
-        console.log('updateResult', updateResult)
+        // console.log('updateResult', updateResult)
         res.send(updateResult[0])
       })
     }

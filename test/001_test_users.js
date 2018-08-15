@@ -84,10 +84,10 @@ describe('GET /api/users/:id', () => {
           id: 1,
           user_type: 'user',
           email: 'user@gmail.com',
-          password: '12345678',
+          password: bcrypt.hashSync('priscilla'),
           first_name: 'Priscilla',
           last_name: 'User',
-          phone_number: 5105105511,
+          phone_number: '5105105511',
           address_one: '44 Tehama Street',
           address_two: '3rd floor',
           zip: 94105
@@ -101,10 +101,10 @@ describe('POST /api/users', () => {
   let newUser = {
     user_type: 'user',
     email: 'user2@gmail.com',
-    password: '12345678',
+    password: bcrypt.hashSync('12345678'),
     first_name: 'Peter',
     last_name: 'Pan',
-    phone_number: 3334445656,
+    phone_number: '3334445656',
     address_one: '44 Tehama Street',
     address_two: '3rd floor',
     zip: 94105
@@ -137,12 +137,13 @@ describe('POST /api/users', () => {
 // update one
 describe('PUT /api/users/:id', done => {
   let updatedUser = {
+    id: 1,
     user_type: 'user',
     email: 'user_testing@gmail.com',
-    password: bcrypt.hashSync('12345678'),
+    password: bcrypt.hashSync('priscilla'),
     first_name: 'Priscilla Testing',
     last_name: 'User',
-    phone_number: 5105105511,
+    phone_number: '5105105511',
     address_one: '44 Tehama Street',
     address_two: '3rd floor',
     zip: 94105

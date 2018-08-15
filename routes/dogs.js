@@ -8,7 +8,6 @@ const upload = multer({ dest: 'public/images' })
 /* GET all dogs: listing. */
 router.get('/', auth.checkForToken, auth.verifyToken, (req, res, next) => {
   let user_id = req.token.user_id;
-
   knex('dogs')
   .where('user_id', user_id)
   .then((dogs) => {
