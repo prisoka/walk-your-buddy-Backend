@@ -67,7 +67,7 @@ router.post('/', (req, res, next) => {
     if(user) {
       throw new Error('This email already exists!')
     }
-
+    // hash the password:
     let hashed = bcrypt.hashSync(password)
 
     knex('users')
@@ -87,14 +87,6 @@ router.post('/', (req, res, next) => {
       let insertedRecord = result[0]
       res.send({})
     })
-    // .then(function(user){
-    //   var token = jwt.sign({ user: user.id },
-    //                         'secret',
-    //                         { expiresIn: 24 * 60 * 60 });
-    //   res.send(200, {'token': myToken,
-    //                  'user_id': user.id
-    //                 });
-    // });
   })
   .catch((err) => {
     next(err)
