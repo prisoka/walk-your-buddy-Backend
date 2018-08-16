@@ -137,4 +137,28 @@ router.put('/:id', auth.checkForToken, auth.verifyToken, auth.authorizedWalker, 
   })
 })
 
+// DELETE one request
+router.delete('/:id', function(req, res, next) {
+  const requestId = req.params.id;
+
+  knex('requests')
+    .where('id', requestId)
+    .then((row) => {
+      if(!row) return next()
+      knex('requests')
+        .del()
+        .where('id', requestId)
+        .then(() => {
+          // res.send(`ID ${requestId} Deleted`)
+          res.send({})
+        })
+        .catch((err) => {
+          next(err)
+        })
+    })
+    .catch((err) => {
+      next(err)
+    })
+})
+
 module.exports = router;
