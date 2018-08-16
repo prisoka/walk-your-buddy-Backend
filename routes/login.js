@@ -28,6 +28,7 @@ router.post('/', (req, res, next) => {
           secure: router.get('env') === 'production'
         })
         res.status(200).send({
+          user_id: user.id,
           first_name: user.first_name,
           user_type: user.user_type
         });
