@@ -32,6 +32,8 @@ router.post('/', (req, res, next) => {
           first_name: user.first_name,
           user_type: user.user_type
         });
+      } else {
+        throw new Error('Incorrect Email or Password')
       }
     } else {
       throw new Error('Incorrect Email or Password')

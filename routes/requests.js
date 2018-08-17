@@ -4,7 +4,9 @@ const knex = require('../db/knex');
 const auth = require('../auth/auth');
 
 /* GET all requests: listing. */
-router.get('/', (req, res, next) => {
+router.get('/', auth.checkForToken, auth.verifyToken, auth.authorizedWalker, (req, res, next) => {
+  let walker_id = req.token.user_id;
+
   knex('requests')
   .select(
     "u.first_name",
@@ -19,6 +21,8 @@ router.get('/', (req, res, next) => {
     "r.walker_id"
   )
   .from('requests AS r')
+  .where('r.walker_id', null)
+  .orWhere('r.walker_id', walker_id)
   .join('users AS u', 'u.id', 'r.user_id')
   .join('dogs AS d', 'd.id', 'r.dog_id')
   .orderBy('r.request_date')
@@ -53,7 +57,7 @@ router.get('/:id', (req, res, next) => {
   })
 })
 
-// CREATE on request
+// CREATE one request
 router.post('/', auth.checkForToken, auth.verifyToken, auth.authorizedUser, (req, res, next) => {
   let user_id = req.token.user_id;
   let dog_id = req.body.dog_id;
