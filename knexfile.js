@@ -1,4 +1,7 @@
 'use strict';
+
+const env = process.env.NODE_ENV
+
 if(env === 'production'){
   require('dotenv').config({path: './.env.production'});
 } else {
