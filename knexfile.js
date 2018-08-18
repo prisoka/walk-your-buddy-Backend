@@ -1,5 +1,9 @@
 'use strict';
-require('dotenv').config({path: './.env.development'});
+if(env === 'production'){
+  require('dotenv').config({path: './.env.production'});
+} else {
+  require('dotenv').config({path: './.env.development'});
+}
 
 module.exports = {
   development: {
