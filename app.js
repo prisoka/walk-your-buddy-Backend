@@ -1,3 +1,11 @@
+const env = process.env.NODE_ENV
+
+if(env === 'production'){
+  require('dotenv').config({path: './.env.production'});
+} else {
+  require('dotenv').config({path: './.env.development'});
+}
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -24,7 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://wyb.herokuapp.com");
+  res.header("Access-Control-Allow-Origin", process.env.CLIENT_SIDE_URL);
   res.header("Access-Control-Allow-Credentials", "true");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');

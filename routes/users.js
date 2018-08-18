@@ -3,7 +3,6 @@ const router = express.Router();
 const knex = require('../db/knex');
 const bcrypt = require('bcryptjs');
 
-
 /* GET all users: listing. */
 router.get('/', (req, res, next) => {
   knex('users')

@@ -3,7 +3,6 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const knex = require('../db/knex');
-require('dotenv').config();
 
 // login USER
 router.post('/', (req, res, next) => {
