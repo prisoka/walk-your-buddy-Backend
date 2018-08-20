@@ -48,7 +48,7 @@ router.post('/', auth.checkForToken, auth.verifyToken, auth.authorizedUser, uplo
   let dog_size = req.body.dog_size;
   let dog_photo_url = req.file.path;
 
-  dog_photo_url = `http://localhost:3000/${dog_photo_url.replace('public/', '')}`
+  dog_photo_url = `${process.env.REACT_APP_API_URL}/${dog_photo_url.replace('public/', '')}`
 
   knex('dogs')
   .insert({
