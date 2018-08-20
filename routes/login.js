@@ -24,7 +24,7 @@ router.post('/', (req, res, next) => {
         res.cookie('token', token, {
           // httpOnly: true,
           expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
-          secure: router.get('env') === 'production'
+          secure: false
         })
         res.status(200).send({
           user_id: user.id,
