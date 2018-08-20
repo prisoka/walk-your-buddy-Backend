@@ -25,7 +25,6 @@ router.post('/', (req, res, next) => {
           // httpOnly: true,
           expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
           secure: false,
-          domain: process.env.CLIENT_SIDE_URL
         })
         res.status(200).send({
           user_id: user.id,

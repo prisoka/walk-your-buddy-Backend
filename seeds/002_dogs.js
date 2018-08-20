@@ -1,3 +1,11 @@
+const env = process.env.NODE_ENV
+
+if(env === 'production'){
+  require('dotenv').config({path: './.env.production'});
+} else {
+  require('dotenv').config({path: './.env.development'});
+}
+
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
   return knex('dogs').del()
@@ -9,14 +17,14 @@ exports.seed = function(knex, Promise) {
           dog_name: 'Aquila',
           dog_age: 1,
           dog_size: 'large',
-          dog_photo_url: 'http://localhost:3000/images/aquila.JPG'
+          dog_photo_url: process.env.REACT_APP_API_URL + '/images/aquila.JPG'
         },
         {
           user_id: 1,
           dog_name: 'Bacon',
           dog_age: 5,
           dog_size: 'small',
-          dog_photo_url: 'http://localhost:3000/images/fernanda-soares-668153-unsplash.jpg'
+          dog_photo_url: process.env.REACT_APP_API_URL + '/images/fernanda-soares-668153-unsplash.jpg'
         }
       ]);
     });
