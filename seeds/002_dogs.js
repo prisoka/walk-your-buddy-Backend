@@ -15,7 +15,7 @@ exports.seed = function(knex, Promise) {
         {
           user_id: 1,
           dog_name: 'Aquila',
-          dog_age: 1,
+          dog_age: 6,
           dog_size: 'large',
           dog_photo_url: process.env.REACT_APP_API_URL + '/images/aquila.JPG'
         },
@@ -25,6 +25,20 @@ exports.seed = function(knex, Promise) {
           dog_age: 5,
           dog_size: 'small',
           dog_photo_url: process.env.REACT_APP_API_URL + '/images/fernanda-soares-668153-unsplash.jpg'
+        },
+        {
+          user_id: 1,
+          dog_name: 'Bolacha',
+          dog_age: 4,
+          dog_size: 'medium',
+          dog_photo_url: process.env.REACT_APP_API_URL + '/images/florencia-potter-566712-unsplash.jpg'
+        },
+        {
+          user_id: 1,
+          dog_name: 'Peanut Butter',
+          dog_age: 2,
+          dog_size: 'small',
+          dog_photo_url: process.env.REACT_APP_API_URL + '/images/mink-mingle-323378-unsplash.jpg'
         }
       ]);
     });

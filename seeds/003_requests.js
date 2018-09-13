@@ -9,6 +9,8 @@ exports.seed = function(knex, Promise) {
           dog_id: 1,
           request_date: '2018/10/09',
           request_time: '09:00 am',
+          start_walk_time: '09:00 am',
+          finish_walk_time: '09:45 am',
           walker_id: null,
         },
         {
