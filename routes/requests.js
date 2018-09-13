@@ -12,6 +12,7 @@ router.get('/', auth.checkForToken, auth.verifyToken, auth.authorizedWalker, (re
     "u.first_name",
     "u.address_one",
     "u.address_two",
+    "u.phone_number",
     "u.zip",
     "d.dog_name",
     "d.dog_photo_url",
