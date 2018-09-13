@@ -19,6 +19,8 @@ router.get('/', auth.checkForToken, auth.verifyToken, auth.authorizedWalker, (re
     "r.id",
     "r.request_date",
     "r.request_time",
+    "r.start_walk_time",
+    "r.finish_walk_time",
     "r.walker_id"
   )
   .from('requests AS r')
@@ -108,6 +110,8 @@ router.put('/:id', auth.checkForToken, auth.verifyToken, auth.authorizedWalker, 
         dog_id: dog_id,
         request_date: request_date,
         request_time: request_time,
+        start_walk_time: start_walk_time,
+        finish_walk_time: finish_walk_time,
         walker_id: walker_id
       })
       .where('id', req.params.id)
@@ -124,6 +128,8 @@ router.put('/:id', auth.checkForToken, auth.verifyToken, auth.authorizedWalker, 
           "r.id",
           "r.request_date",
           "r.request_time",
+          "r.start_walk_time",
+          "r.finish_walk_time",
           "r.walker_id"
         )
         .from('requests AS r')
