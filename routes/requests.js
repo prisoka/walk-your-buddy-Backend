@@ -98,6 +98,8 @@ router.put('/:id', auth.checkForToken, auth.verifyToken, auth.authorizedWalker, 
   let dog_id = req.body.dog_id;
   let request_date = req.body.request_date;
   let request_time = req.body.request_time;
+  let start_walk_time = req.body.start_walk_time;
+  let finish_walk_time = req.body.finish_walk_time;
   let walker_id = req.token.user_id;
 
   knex('requests')
