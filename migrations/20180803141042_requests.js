@@ -6,8 +6,8 @@ exports.up = function(knex, Promise) {
     table.integer('dog_id').references('dogs.id').onDelete('CASCADE').index().notNullable();
     table.date('request_date').notNullable();
     table.time('request_time').notNullable();
-    table.time('start_walk_time');
-    table.time('finish_walk_time');
+    table.datetime('start_walk_time');
+    table.datetime('finish_walk_time');
     table.integer('walker_id').references('users.id').onDelete('CASCADE').index();
     table.timestamps(true, true);
   })
