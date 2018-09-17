@@ -9,7 +9,7 @@ exports.seed = function(knex, Promise) {
           dog_id: 1,
           request_date: '2018/10/09',
           request_time: '09:15 am',
-          walker_id: 2,
+          walker_id: null,
         },
         {
           user_id: 1,
