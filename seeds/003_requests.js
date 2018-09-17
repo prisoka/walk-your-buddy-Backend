@@ -52,7 +52,7 @@ exports.seed = function(knex, Promise) {
           user_id: 1,
           dog_id: 7,
           request_date: '2018/12/28',
-          request_time: '12:00 pm',
+          request_time: '03:00 pm',
           walker_id: null,
         },
         {
@@ -66,7 +66,7 @@ exports.seed = function(knex, Promise) {
           user_id: 1,
           dog_id: 9,
           request_date: '2019/01/15',
-          request_time: '10:00 am',
+          request_time: '10:45 am',
           walker_id: null,
         },
         {
@@ -87,7 +87,7 @@ exports.seed = function(knex, Promise) {
           user_id: 1,
           dog_id: 12,
           request_date: '2018/04/28',
-          request_time: '12:00 pm',
+          request_time: '11:35 am',
           walker_id: null,
         },
         {
