@@ -84,7 +84,7 @@ exports.seed = function(knex, Promise) {
         {
           user_id: 1,
           dog_id: 12,
-          request_date: '2018/04/28',
+          request_date: '2018/10/28',
           request_time: '11:35 am',
           walker_id: null,
         },
