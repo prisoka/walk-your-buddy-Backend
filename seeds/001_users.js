@@ -12,7 +12,7 @@ exports.seed = function(knex, Promise) {
           password: bcrypt.hashSync('priscilla'),
           first_name: 'Priscilla',
           last_name: 'User',
-          phone_number: 5105105511,
+          phone_number: process.env.MY_PHONE_NUMBER,
           address_one: '44 Tehama Street',
           address_two: '3rd floor',
           zip: 94105
