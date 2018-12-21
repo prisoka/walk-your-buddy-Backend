@@ -12,10 +12,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-// setting up twilio
-const accountSid = process.env.TWILIO_SID
-const accountToken = process.env.TWILIO_TOKEN
-const client = require('twilio')(accountSid, accountToken)
+// // setting up twilio
+// const accountSid = process.env.TWILIO_SID
+// const accountToken = process.env.TWILIO_TOKEN
+// const client = require('twilio')(accountSid, accountToken)
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -26,19 +26,20 @@ var logoutRouter = require('./routes/logout');
 
 var app = express();
 
-app.get('/testTwilio', (req, res) => {
-  client.messages.create({
-    to: process.env.MY_PHONE_NUMBER,
-    from: '+14157021807',
-    body: 'Hello World from Twilio'
-  }, (err, data) => {
-      if (err){
-        console.log(err)
-      } else {
-        console.log(data)
-      }
-    })
-})
+// testing Twilio SMS
+// app.get('/testTwilio', (req, res) => {
+//   client.messages.create({
+//     to: process.env.MY_PHONE_NUMBER,
+//     from: '+14157021807',
+//     body: 'Hello World from Twilio'
+//   }, (err, data) => {
+//       if (err){
+//         console.log(err)
+//       } else {
+//         console.log(data)
+//       }
+//     })
+// })
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

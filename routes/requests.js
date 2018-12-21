@@ -3,6 +3,11 @@ const router = express.Router();
 const knex = require('../db/knex');
 const auth = require('../auth/auth');
 
+// setting up twilio
+const accountSid = process.env.TWILIO_SID
+const accountToken = process.env.TWILIO_TOKEN
+const client = require('twilio')(accountSid, accountToken)
+
 /* GET all requests: listing. */
 router.get('/', auth.checkForToken, auth.verifyToken, auth.authorizedWalker, (req, res, next) => {
   let walker_id = req.token.user_id;
@@ -124,6 +129,7 @@ router.put('/:id', auth.checkForToken, auth.verifyToken, auth.authorizedWalker, 
           "u.first_name",
           "u.address_one",
           "u.address_two",
+          "u.phone_number",
           "u.zip",
           "d.dog_name",
           "d.dog_photo_url",
@@ -142,6 +148,18 @@ router.put('/:id', auth.checkForToken, auth.verifyToken, auth.authorizedWalker, 
       .then((result) => {
         let request = result[0]
         res.send(request)
+
+        client.messages.create({
+          to: process.env.MY_PHONE_NUMBER,
+          from: process.env.MY_TWILIO_NUMBER,
+          body: 'Ahoy from WYB: Your walking request has been accepted!'
+        }, (err, data) => {
+            if (err){
+              console.log(err)
+            } else {
+              console.log(data)
+            }
+          })
       })
     }
   })
