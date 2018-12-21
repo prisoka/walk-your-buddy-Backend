@@ -97,7 +97,7 @@ router.post('/', auth.checkForToken, auth.verifyToken, auth.authorizedUser, (req
 // request_time
 // walker_id
 
-// UPDATE one request
+// UPDATE request: add walker ID when walk is accepted
 router.put('/:id', auth.checkForToken, auth.verifyToken, auth.authorizedWalker, (req, res, next) => {
   let user_id = req.body.user_id;
   let dog_id = req.body.dog_id;
@@ -150,9 +150,154 @@ router.put('/:id', auth.checkForToken, auth.verifyToken, auth.authorizedWalker, 
         res.send(request)
 
         client.messages.create({
-          to: process.env.MY_PHONE_NUMBER,
+          // to: process.env.MY_PHONE_NUMBER,
+          to: request.phone_number,
           from: process.env.MY_TWILIO_NUMBER,
-          body: 'Ahoy from WYB: Your walking request has been accepted!'
+          body: 'Ahoy from WYB: Your dog walking request has been accepted!'
+        }, (err, data) => {
+            if (err){
+              console.log(err)
+            } else {
+              console.log(data)
+            }
+          })
+      })
+    }
+  })
+  .catch((err) => {
+    next(err)
+  })
+})
+
+// UPDATE request: add "start_walk_time" when walking starts
+router.put('/:id/start_walk', auth.checkForToken, auth.verifyToken, auth.authorizedWalker, (req, res, next) => {
+  let user_id = req.body.user_id;
+  let dog_id = req.body.dog_id;
+  let request_date = req.body.request_date;
+  let request_time = req.body.request_time;
+  let start_walk_time = req.body.start_walk_time;
+  let finish_walk_time = req.body.finish_walk_time;
+  let walker_id = req.token.user_id;
+
+  knex('requests')
+  .where('id', req.params.id)
+  .then((data) => {
+    if(data.length){
+      knex('requests')
+      .update({
+        user_id: user_id,
+        dog_id: dog_id,
+        request_date: request_date,
+        request_time: request_time,
+        start_walk_time: start_walk_time,
+        finish_walk_time: finish_walk_time,
+        walker_id: walker_id
+      })
+      .where('id', req.params.id)
+      .returning('*')
+      .then((result) => {
+        return knex('requests')
+        .select(
+          "u.first_name",
+          "u.address_one",
+          "u.address_two",
+          "u.phone_number",
+          "u.zip",
+          "d.dog_name",
+          "d.dog_photo_url",
+          "r.id",
+          "r.request_date",
+          "r.request_time",
+          "r.start_walk_time",
+          "r.finish_walk_time",
+          "r.walker_id"
+        )
+        .from('requests AS r')
+        .join('users AS u', 'u.id', 'r.user_id')
+        .join('dogs AS d', 'd.id', 'r.dog_id')
+        .where('r.id', req.params.id)
+      })
+      .then((result) => {
+        let request = result[0]
+        res.send(request)
+
+        client.messages.create({
+          // to: process.env.MY_PHONE_NUMBER,
+          to: request.phone_number,
+          from: process.env.MY_TWILIO_NUMBER,
+          body: 'Ahoy from WYB: ' + request.dog_name + " is enjoying a walk outside!"
+        }, (err, data) => {
+            if (err){
+              console.log(err)
+            } else {
+              console.log(data)
+            }
+          })
+      })
+    }
+  })
+  .catch((err) => {
+    next(err)
+  })
+})
+
+// UPDATE request: add "finish_walk_time" when walking finishes
+router.put('/:id/finish_walk', auth.checkForToken, auth.verifyToken, auth.authorizedWalker, (req, res, next) => {
+  let user_id = req.body.user_id;
+  let dog_id = req.body.dog_id;
+  let request_date = req.body.request_date;
+  let request_time = req.body.request_time;
+  let start_walk_time = req.body.start_walk_time;
+  let finish_walk_time = req.body.finish_walk_time;
+  let walker_id = req.token.user_id;
+
+  knex('requests')
+  .where('id', req.params.id)
+  .then((data) => {
+    if(data.length){
+      knex('requests')
+      .update({
+        user_id: user_id,
+        dog_id: dog_id,
+        request_date: request_date,
+        request_time: request_time,
+        start_walk_time: start_walk_time,
+        finish_walk_time: finish_walk_time,
+        walker_id: walker_id
+      })
+      .where('id', req.params.id)
+      .returning('*')
+      .then((result) => {
+        return knex('requests')
+        .select(
+          "u.first_name",
+          "u.address_one",
+          "u.address_two",
+          "u.phone_number",
+          "u.zip",
+          "d.dog_name",
+          "d.dog_photo_url",
+          "r.id",
+          "r.request_date",
+          "r.request_time",
+          "r.start_walk_time",
+          "r.finish_walk_time",
+          "r.walker_id"
+        )
+        .from('requests AS r')
+        .join('users AS u', 'u.id', 'r.user_id')
+        .join('dogs AS d', 'd.id', 'r.dog_id')
+        .where('r.id', req.params.id)
+      })
+      .then((result) => {
+        let request = result[0]
+        res.send(request)
+
+        client.messages.create({
+          // to: process.env.MY_PHONE_NUMBER,
+          to: request.phone_number,
+          from: process.env.MY_TWILIO_NUMBER,
+          body: 'Ahoy from WYB: ' + request.dog_name + " is back home!"
         }, (err, data) => {
             if (err){
               console.log(err)
