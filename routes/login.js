@@ -28,6 +28,8 @@ router.post('/', (req, res, next) => {
           secure: false,
         })
         res.status(200).send({
+          //sending token in response to handle 3rd party api Safari cookie issue
+          token: token,
           user_id: user.id,
           first_name: user.first_name,
           user_type: user.user_type
