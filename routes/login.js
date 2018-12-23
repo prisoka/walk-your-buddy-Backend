@@ -23,6 +23,7 @@ router.post('/', (req, res, next) => {
         let token = jwt.sign(payload, process.env.JWT_KEY)
         res.cookie('token', token, {
           // httpOnly: true,
+          domain: process.env.DOMAIN,
           expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
           secure: false,
         })
